@@ -4,12 +4,18 @@ const express = require("express");
 const chalk = require("chalk");
 // const fs = require("fs/promises");
 const path = require("path");
-const { addNote, getNotes, removeNote } = require("./notes.controller");
+const {
+    addNote,
+    getNotes,
+    removeNote,
+    updateNote,
+} = require("./notes.controller");
 
 const PORT = 3000;
 
 // const basePath = path.join(__dirname, "pages");
 const app = express();
+const jsonParser = express.json();
 
 app.set("view engine", "ejs");
 app.set("views", "pages");
@@ -20,6 +26,7 @@ app.use(
         extended: true,
     })
 );
+app.use(express.json());
 
 // const server = http.createServer(async (req, res) => {
 //     if (req.method === "GET") {
@@ -66,6 +73,15 @@ app.post("/", async (req, res) => {
 
 app.delete("/:id", async (req, res) => {
     removeNote(req.params.id);
+    res.render("index", {
+        title: "Express App",
+        notes: await getNotes(),
+        created: false,
+    });
+});
+
+app.put("/:id", async (req, res) => {
+    updateNote(req.body);
     res.render("index", {
         title: "Express App",
         notes: await getNotes(),

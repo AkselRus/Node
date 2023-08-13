@@ -14,6 +14,8 @@
     <body>
         <% if (created) {%>
         <div class="alert alert-success">Node has been created!</div>
+        <% }%> <% if (update) {%>
+        <div class="alert alert-success">Node has been update!</div>
         <% }%>
 
         <div class="container">
@@ -40,6 +42,14 @@
                         class="list-group-item d-flex justify-content-between align-items-center"
                     >
                         <%= notes[i].title %>
+                        <button
+                            class="btn btn-primary ms-auto"
+                            data-type="update"
+                            data-id="<%= notes[i].id%>"
+                            data-title="<%= notes[i].title%>"
+                        >
+                            Редактировать
+                        </button>
 
                         <button
                             class="btn btn-danger"

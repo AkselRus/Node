@@ -48,10 +48,22 @@ async function removeNote(id) {
         console.log(chalk.red.inverse("No note found"));
     }
 }
+async function updateNote(data) {
+    console.log("data", data);
+    if (data) {
+        const notes = await getNotes();
+        const newNote = notes.map((note) =>
+            note.id === data.id ? { ...note, title: data.title } : note
+        );
+        saveNotes(newNote);
+        console.log(chalk.green("Update Complite"));
+    }
+}
 
 module.exports = {
     addNote,
     getNotes,
     printNotes,
     removeNote,
+    updateNote,
 };
